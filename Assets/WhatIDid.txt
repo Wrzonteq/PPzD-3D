@@ -1,0 +1,5 @@
+1. dźwięk otoczenia wewnątrz i na zewnątrz 
+2. dźwięk generatora
+3. generator nie jest słyszalny na zewnątrz 
+4. Dodany spread
+5. Reverb
