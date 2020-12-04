@@ -11,6 +11,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
     public class FirstPersonController : MonoBehaviour
     {
         [SerializeField] private bool m_IsWalking;
+        [SerializeField] private bool m_metalSurface;
         [SerializeField] private float m_WalkSpeed;
         [SerializeField] private float m_RunSpeed;
         [SerializeField] [Range(0f, 1f)] private float m_RunstepLenghten;
@@ -25,7 +26,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private LerpControlledBob m_JumpBob = new LerpControlledBob();
         [SerializeField] private float m_StepInterval;
         [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
+        [SerializeField] private AudioClip[] d_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField] AudioClip[] runningFootsteps;
+        [SerializeField] AudioClip[] d_runningFootsteps;
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
 
@@ -42,7 +45,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_NextStep;
         private bool m_Jumping;
         private AudioSource m_AudioSource;
-
+        
         // Use this for initialization
         private void Start()
         {
@@ -105,6 +108,18 @@ namespace UnityStandardAssets.Characters.FirstPerson
             Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out hitInfo,
                                m_CharacterController.height/2f, Physics.AllLayers, QueryTriggerInteraction.Ignore);
             desiredMove = Vector3.ProjectOnPlane(desiredMove, hitInfo.normal).normalized;
+
+            RaycastHit hit;
+            int layerMask = 1 << 13;
+            //layerMask = ~layerMask;
+            m_metalSurface = false;
+            if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 10, transform.position.z), Vector3.down, out hit,
+                                11f, layerMask)) {
+                if (hit.collider.CompareTag("MetalSurface"))
+                {
+                    m_metalSurface = true;
+                }  
+            }
 
             m_MoveDir.x = desiredMove.x*speed;
             m_MoveDir.z = desiredMove.z*speed;
@@ -169,13 +184,20 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             // pick & play a random footstep sound from the array,
             // excluding sound at index 0
-            var foostepsClips = m_IsWalking ? m_FootstepSounds : runningFootsteps;
-            int n = Random.Range(1, foostepsClips.Length);
-            m_AudioSource.clip = foostepsClips[n];
+            //var foostepsClips = m_IsWalking ? m_FootstepSounds : runningFootsteps;
+            var footstepsClips = d_FootstepSounds;
+
+            if (m_metalSurface)
+                footstepsClips = m_IsWalking ? m_FootstepSounds : runningFootsteps;
+            else
+                footstepsClips = m_IsWalking ? d_FootstepSounds : d_runningFootsteps;
+            
+            int n = Random.Range(1, footstepsClips.Length);
+            m_AudioSource.clip = footstepsClips[n];
             m_AudioSource.PlayOneShot(m_AudioSource.clip);
             // move picked sound to index 0 so it's not picked next time
-            foostepsClips[n] = foostepsClips[0];
-            foostepsClips[0] = m_AudioSource.clip;
+            footstepsClips[n] = footstepsClips[0];
+            footstepsClips[0] = m_AudioSource.clip;
         }
 
 
