@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8200000}
   m_Layer: 0
   m_Name: FPSController
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -173,8 +173,41 @@ MonoBehaviour:
     BobAmount: 0.1
   m_StepInterval: 5
   m_FootstepSounds:
-  - {fileID: 8300000, guid: 42e65e088b3f4374e851b8dbd38f3df9, type: 3}
-  - {fileID: 8300000, guid: 8bc94ec6ed537e743b481638bdcd503d, type: 3}
+  - {fileID: 8300000, guid: 5d2011d29c63fca4a97604f727ec715c, type: 3}
+  - {fileID: 8300000, guid: eb96894d54d52d9468974faf8c197fc1, type: 3}
+  - {fileID: 8300000, guid: 6aa32417e40537943ac1d41429454e6f, type: 3}
+  - {fileID: 8300000, guid: d7751f2648b054f4382538da97ecd6db, type: 3}
+  - {fileID: 8300000, guid: bb91a4d71348c974aa52315cb4b8f34d, type: 3}
+  - {fileID: 8300000, guid: 74d53a1996b0db84fb15219041a962f6, type: 3}
+  - {fileID: 8300000, guid: ae15eb5c5f906dc4099b210a952b0bec, type: 3}
+  - {fileID: 8300000, guid: 85b4fbf66967cd44bb3e8044aa12a283, type: 3}
+  m_FootstepSoundsMetal:
+  - {fileID: 8300000, guid: b92043aa7c163874cb91ea3971b8a962, type: 3}
+  - {fileID: 8300000, guid: b69787893380f9d41890cff582d11446, type: 3}
+  - {fileID: 8300000, guid: b0063ea85f6238b4fb1b388c9a6a1501, type: 3}
+  - {fileID: 8300000, guid: 350e31b02b15e27459ae30aa958b058a, type: 3}
+  - {fileID: 8300000, guid: 46f9735751fade34b8d4f0b23e1e5dc0, type: 3}
+  - {fileID: 8300000, guid: d671e5688d2e0724082dd84751646e2f, type: 3}
+  - {fileID: 8300000, guid: 4e26d3ff3659b3f469608f435e46abd2, type: 3}
+  - {fileID: 8300000, guid: b0e635b7a6e193d479c1d1777ce16804, type: 3}
+  runningFootsteps:
+  - {fileID: 8300000, guid: ebf1c3da5aa19b74e92257058d700f6f, type: 3}
+  - {fileID: 8300000, guid: afcf8bfca53080f408ff0ad996267de8, type: 3}
+  - {fileID: 8300000, guid: 09142841b73b6a041a1c90b11463bb2b, type: 3}
+  - {fileID: 8300000, guid: 3cd24bd07afbc41478ce8c9f740375af, type: 3}
+  - {fileID: 8300000, guid: 3a7563a44acd323468722e6c5fb9cf26, type: 3}
+  - {fileID: 8300000, guid: 74104bbb6e4765a4a9520afe9a0f0a9e, type: 3}
+  - {fileID: 8300000, guid: 344262c33a7de5a44a206abd26f766eb, type: 3}
+  - {fileID: 8300000, guid: c63823f51a2fd9841bfee306e8f812c6, type: 3}
+  runningFootstepsMetal:
+  - {fileID: 8300000, guid: 8d9fe396f06b33a4382f92da8dad05b0, type: 3}
+  - {fileID: 8300000, guid: c49c0aee6ea815a489372d5e0c6c2a0c, type: 3}
+  - {fileID: 8300000, guid: cf45a61b86c37a741a22b9d018dc1f68, type: 3}
+  - {fileID: 8300000, guid: b8e15b0fae45fe747a7dbd8ee70a76aa, type: 3}
+  - {fileID: 8300000, guid: 815a1f2f727d5554ab10ac6190d3595b, type: 3}
+  - {fileID: 8300000, guid: 6b9223a256ccaac438c6b837e0ab71fe, type: 3}
+  - {fileID: 8300000, guid: 9a4778773c2818c47807ac0b4efdf3ed, type: 3}
+  - {fileID: 8300000, guid: 2509d1b60d89ac54aa8da4ab13f45149, type: 3}
   m_JumpSound: {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
   m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
 --- !u!54 &5400000
@@ -316,7 +349,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.8, z: 0}
+  m_LocalPosition: {x: 0, y: 0.914, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
