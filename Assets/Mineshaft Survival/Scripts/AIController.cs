@@ -23,6 +23,7 @@ public class AIController : MonoBehaviour {
     public GameObject pathLeader; //RandomPath Gen sphere
 
     public GameObject AIObj; //Model of the AI
+    public GameObject Rat; //Model of the AI    
     public GameObject Player;//Player
     Rigidbody rb; //Automaticly finds the rigidbody
     float distance; //distance float for distance calculations
@@ -36,6 +37,8 @@ public class AIController : MonoBehaviour {
         }
         StartCoroutine(Attack());
 
+        //InvokeRepeating("RatIdleSound", 1, Random.Range(3, 5));
+
     }
 
 	void Update ()
@@ -43,7 +46,10 @@ public class AIController : MonoBehaviour {
         if(Health <= 0) //if healht is 0 or less it will die and change models rotation to -90
         {
             AIObj.transform.eulerAngles = new Vector3(-90, -90, 0);
+            StopCoroutine(Path());
+            StopCoroutine(Attack());
             Die();
+            
         }
 
         distance = Vector3.Distance(gameObject.transform.position, Player.transform.position); //calulates the distance between player and the AI
@@ -81,31 +87,57 @@ public class AIController : MonoBehaviour {
 	}
     IEnumerator Attack()
     {
-        yield return new WaitForSeconds(AttackSpeed); //Number of seconds to wait between attacks
-        if (Agressive && distance <= 2 && Health >1) //if player is in range of 2meters and AI has more than 1 health
+        if (!rb.isKinematic)
         {
-            Player.transform.GetComponent<LifeStats>().Health -= Damage; //deal damage to player
-            StartCoroutine(Attack()); //start new attack
-        }
-        else
-        {
-            StartCoroutine(Attack()); //if not agressive or not in range try attacking again
+            //GameEvents.soundEvent.RatAttack();
+
+            yield return new WaitForSeconds(AttackSpeed); //Number of seconds to wait between attacks
+                                                          //GameEvents.soundEvent.RatAttack();
+            if (Agressive && distance <= 2 && Health > 1) //if player is in range of 2meters and AI has more than 1 health
+            {
+                Player.transform.GetComponent<LifeStats>().Health -= Damage; //deal damage to player
+                GameEvents.soundEvent.RatAttack();
+                StartCoroutine(Attack()); //start new attack
+            }
+            else
+            {
+                StartCoroutine(Attack()); //if not agressive or not in range try attacking again
+                //GameEvents.soundEvent.RatAttack();
+            }
+
         }
 
     }
 
     IEnumerator Path()
     {
-        pathRotator.transform.position = gameObject.transform.position; //set path's rotators position to current AI position
-        pathRotator.transform.Rotate(Vector3.up * Random.Range(-220, 220)); //randomly rotate path rotator
-        yield return new WaitForSeconds(5); //wait 5 seconds before repeating 
-        StartCoroutine(Path()); //start path finding again
+        if(rb.isKinematic == false)
+        {
+            pathRotator.transform.position = gameObject.transform.position; //set path's rotators position to current AI position
+            pathRotator.transform.Rotate(Vector3.up * Random.Range(-220, 220)); //randomly rotate path rotator
+            GameEvents.soundEvent.RatIDLE();
+            yield return new WaitForSeconds(5); //wait 5 seconds before repeating 
+            StartCoroutine(Path()); //start path finding again
+        }
     }
     public void Die()
     {
+        GameEvents.soundEvent.RatDeath();
         rb.isKinematic = true; //set rigidbody to kinematic when dead
         thirdChar.enabled = false; //disable all scripts after death
+        Invoke("Destroy", 1);
         Target.enabled = false; // ^
         this.enabled = false; // ^
+    }
+
+    void RatIdleSound()
+    {
+        if(!rb.isKinematic)
+            GameEvents.soundEvent.RatIDLE();
+    }
+
+    void Destroy()
+    {
+        Destroy(Rat);
     }
 }

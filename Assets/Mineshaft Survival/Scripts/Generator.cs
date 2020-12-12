@@ -12,7 +12,7 @@ public class Generator : MonoBehaviour {
     [Header("Visuals")]
     public GameObject VisualObjects;
 
-   // [Header("ID")]
+    // [Header("ID")]
     string GeneratorID;
 
     string GeneratorTogg;
@@ -29,16 +29,23 @@ public class Generator : MonoBehaviour {
         {
             CurrentFuel = 2;
             Toggled = false;
+            GameEvents.soundEvent.GeneratorWorking();
+            Debug.Log("Generator ON");
+
         }
-        
-        if(Toggled)
+
+        if (Toggled)
         {
             VisualObjects.SetActive(true);
             CurrentFuel -= 0.03f;
+            GameEvents.soundEvent.GeneratorWorking();
+
         }
         else
         {
             VisualObjects.SetActive(false);
+            GameEvents.soundEvent.GeneratorNotWorking();
+            Debug.Log("Generator OFF");
         }
     }
 
@@ -55,6 +62,7 @@ public class Generator : MonoBehaviour {
         if(PlayerPrefs.GetInt(GeneratorTogg) == 1)
         {
             Toggled = true;
+
         }
         if(PlayerPrefs.GetInt(GeneratorTogg) == 2)
         {
@@ -79,6 +87,8 @@ public class Generator : MonoBehaviour {
     public void Toggle()
     {
         Toggled = !Toggled;
+        GameEvents.soundEvent.GeneratorSwitch();
+
     }
     IEnumerator autoSave()
     {

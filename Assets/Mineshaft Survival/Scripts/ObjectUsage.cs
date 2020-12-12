@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class ObjectUsage : MonoBehaviour {
@@ -28,6 +29,7 @@ public class ObjectUsage : MonoBehaviour {
     public Animator punchAnim;
     public GameObject pickaxeSparks;
 
+
     [Header ("Grabbing Objects")]
     public GameObject GrabIcon;
     public SpringJoint joint;
@@ -47,18 +49,7 @@ public class ObjectUsage : MonoBehaviour {
 
     [Header ("Other objects")]
     public Camera PlayerCam;
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 	void Update ()
     {
@@ -70,6 +61,7 @@ public class ObjectUsage : MonoBehaviour {
             if (inventory.selected == 0)
             {
                 punchAnim.SetTrigger("PunchTorch");
+                Debug.Log("TOrch punch");
                 if (Physics.Raycast(ray, out hit, 4f))
                 {
                     if(hit.transform.tag == "AI")
@@ -87,32 +79,36 @@ public class ObjectUsage : MonoBehaviour {
 
                 punchAnim.SetTrigger("PunchPick");
 
-
                 if (Physics.Raycast(ray, out hit, 4f))
                 {
 
-                    GameObject PickSpark = Instantiate(pickaxeSparks, hit.point, Quaternion.LookRotation(hit.normal));
-                    Destroy(PickSpark, 3f);
-                    if(hit.transform.tag == "Mineable")
-                    {
-                        Mineable mine = hit.transform.GetComponent<Mineable>();
-
-                        mine.Health -= 50f;
-                        mine.MineRefresh();
-                        mine.Save();
-
-                    }
-
-
-
                     if (hit.transform.tag == "AI")
                     {
+                        GameEvents.soundEvent.PickaxeHitAI();
+
                         AIController AI = hit.transform.GetComponent<AIController>();
                         AI.Health -= 50f;
                         AI.Agressive = true;
                         AI.PathFinder = false;
                         AI.DetectionRange += 5f;
                     }
+                    else
+                    {
+                        GameObject PickSpark = Instantiate(pickaxeSparks, hit.point, Quaternion.LookRotation(hit.normal));
+                        Destroy(PickSpark, 3f);
+                        GameEvents.soundEvent.PickaxeHit();
+
+                        if (hit.transform.tag == "Mineable")
+                        {
+                            Mineable mine = hit.transform.GetComponent<Mineable>();
+
+                            mine.Health -= 50f;
+                            mine.MineRefresh();
+                            mine.Save();
+
+                        }
+                    }
+                    
                 }
             }
         }
@@ -195,6 +191,7 @@ public class ObjectUsage : MonoBehaviour {
                     RefillPanelGenerator.SetActive(true);
                     if(Input.GetKeyDown("r"))
                     {
+                        GameEvents.soundEvent.LiquidPour();
                         OilHolder.HoldingNow--;
                         hit.transform.GetComponent<Generator>().CurrentFuel += 1000;
                         hit.transform.GetComponent<Generator>().SaveStats();
@@ -246,9 +243,12 @@ public class ObjectUsage : MonoBehaviour {
                 TakeOilPanel.SetActive(true);
                 if(Input.GetKeyDown("e"))
                 {
-                    if(hit.transform.GetComponent<OilBarrel>().fuel >= 2 && OilHolder.HoldingNow == 0)
+
+                    if (hit.transform.GetComponent<OilBarrel>().fuel >= 2 && OilHolder.HoldingNow == 0)
                     {
-                            OilHolder.HoldingNow += 2;
+                        GameEvents.soundEvent.LiquidPour();
+
+                        OilHolder.HoldingNow += 2;
                             hit.transform.GetComponent<OilBarrel>().fuel -= 2;
                             OilHolder.Save();
                             hit.transform.GetComponent<OilBarrel>().Save();
@@ -384,6 +384,7 @@ public class ObjectUsage : MonoBehaviour {
                         refillText.SetActive(true);
                         if (Input.GetKeyDown("r"))
                         {
+                            GameEvents.soundEvent.LiquidPour();
                             OilHolder.HoldingNow--;
                             objHit.GetComponent<Lantern>().Fuel += 900f;
                             OilHolder.Save();
@@ -399,10 +400,12 @@ public class ObjectUsage : MonoBehaviour {
                 {
                     LampStatus.text = "Active";
                     LampStatus.color = Color.green;
+
+
                 }
                 if (objHit.GetComponent<Lantern>().toggled == false)
                 {
-                    if(objHit.GetComponent<Lantern>().Fuel >= 1.5f)
+                    if (objHit.GetComponent<Lantern>().Fuel >= 1.5f)
                     {
                         LampStatus.text = "Off";
                         LampStatus.color = Color.yellow;
@@ -418,11 +421,23 @@ public class ObjectUsage : MonoBehaviour {
                 if (Input.GetKeyDown("e"))
                 {
 
-                      if(objHit.GetComponent<Lantern>().Fuel >= 1f )
+                    if (objHit.GetComponent<Lantern>().Fuel >= 1f)
                     {
+
                         objHit.GetComponent<Lantern>().Toggle();
                         objHit.GetComponent<Lantern>().SaveSettings();
                     }
+
+                    if (objHit.GetComponent<Lantern>().toggled == false)
+                    {
+                        GameEvents.soundEvent.LampOut();
+                        Debug.Log("LAMP OUT");
+                    }
+                    else
+                    {
+                        GameEvents.soundEvent.LampIgnite();
+                    }
+
 
                 }
 
