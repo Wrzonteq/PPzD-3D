@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 
 namespace UnityStandardAssets.Characters.FirstPerson
 {
+
     [RequireComponent(typeof (CharacterController))]
     [RequireComponent(typeof (AudioSource))]
     public class FirstPersonController : MonoBehaviour
@@ -24,11 +25,15 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private CurveControlledBob m_HeadBob = new CurveControlledBob();
         [SerializeField] private LerpControlledBob m_JumpBob = new LerpControlledBob();
         [SerializeField] private float m_StepInterval;
-        [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
-        [SerializeField] AudioClip[] runningFootsteps;
+        [SerializeField] AudioClip[] indoorFootsteps;
+        [SerializeField] AudioClip[] outdoorFootsteps;
+        [SerializeField] AudioClip[] runningOutdoorFootsteps;
+        [SerializeField] AudioClip[] runningIndoorFootsteps;
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
 
+        private AudioClip[] activeRunningFootsteps;
+        private AudioClip[] activeFootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         private Camera m_Camera;
         private bool m_Jump;
         private float m_YRotation;
@@ -56,6 +61,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Jumping = false;
             m_AudioSource = GetComponent<AudioSource>();
 			m_MouseLook.Init(transform , m_Camera.transform);
+            ChangeActiveFootsteps(EnvironmentalState.outdoor);
         }
 
 
@@ -84,6 +90,19 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
         }
 
+        public void ChangeActiveFootsteps(EnvironmentalState state)
+        {
+            if (state == EnvironmentalState.indoor)
+            {
+                activeFootstepSounds = indoorFootsteps;
+                activeRunningFootsteps = runningIndoorFootsteps;
+            }
+            else
+            {
+                activeFootstepSounds = outdoorFootsteps;
+                activeRunningFootsteps = runningOutdoorFootsteps;
+            }
+        }
 
         private void PlayLandingSound()
         {
@@ -169,7 +188,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             // pick & play a random footstep sound from the array,
             // excluding sound at index 0
-            var foostepsClips = m_IsWalking ? m_FootstepSounds : runningFootsteps;
+            var foostepsClips = m_IsWalking ? activeFootstepSounds : activeRunningFootsteps;
             int n = Random.Range(1, foostepsClips.Length);
             m_AudioSource.clip = foostepsClips[n];
             m_AudioSource.PlayOneShot(m_AudioSource.clip);
@@ -257,5 +276,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
         }
+
     }
 }
