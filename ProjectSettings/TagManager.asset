@@ -13,6 +13,7 @@ TagManager:
   - Generator
   - SpotLight
   - AI
+  - Ground
   layers:
   - Default
   - TransparentFX
