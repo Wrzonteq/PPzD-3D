@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class ObjectUsage : MonoBehaviour {
@@ -48,18 +49,10 @@ public class ObjectUsage : MonoBehaviour {
     [Header ("Other objects")]
     public Camera PlayerCam;
 
-
-
-
-
-
-
-
-
-
-
-
-
+    public UnityEvent torchHit;
+    public UnityEvent pickaxeHit;
+    public UnityEvent pickaxeWallHit;
+    
 	void Update ()
     {
         RaycastHit hit;
@@ -70,6 +63,7 @@ public class ObjectUsage : MonoBehaviour {
             if (inventory.selected == 0)
             {
                 punchAnim.SetTrigger("PunchTorch");
+                torchHit?.Invoke();
                 if (Physics.Raycast(ray, out hit, 4f))
                 {
                     if(hit.transform.tag == "AI")
@@ -86,11 +80,12 @@ public class ObjectUsage : MonoBehaviour {
             {
 
                 punchAnim.SetTrigger("PunchPick");
-
+                pickaxeHit?.Invoke();
 
                 if (Physics.Raycast(ray, out hit, 4f))
                 {
 
+                    pickaxeWallHit?.Invoke();
                     GameObject PickSpark = Instantiate(pickaxeSparks, hit.point, Quaternion.LookRotation(hit.normal));
                     Destroy(PickSpark, 3f);
                     if(hit.transform.tag == "Mineable")
