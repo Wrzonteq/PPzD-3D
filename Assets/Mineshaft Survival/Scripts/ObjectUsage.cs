@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class ObjectUsage : MonoBehaviour {
+
+    [SerializeField] AudioSource PickSwing;
+    [SerializeField] AudioSource PickHit;
 
     [Header ("Fuel Objects")]
     public Slider fuel;
@@ -87,10 +91,12 @@ public class ObjectUsage : MonoBehaviour {
 
                 punchAnim.SetTrigger("PunchPick");
 
+                 PickSwing.Play(0);
 
                 if (Physics.Raycast(ray, out hit, 4f))
                 {
 
+                     PickHit.Play(0);
                     GameObject PickSpark = Instantiate(pickaxeSparks, hit.point, Quaternion.LookRotation(hit.normal));
                     Destroy(PickSpark, 3f);
                     if(hit.transform.tag == "Mineable")

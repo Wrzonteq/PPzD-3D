@@ -173,8 +173,37 @@ MonoBehaviour:
     BobAmount: 0.1
   m_StepInterval: 5
   m_FootstepSounds:
-  - {fileID: 8300000, guid: 42e65e088b3f4374e851b8dbd38f3df9, type: 3}
-  - {fileID: 8300000, guid: 8bc94ec6ed537e743b481638bdcd503d, type: 3}
+  - {fileID: 8300000, guid: e16bed93cb46442498f7cbad2fac0e76, type: 3}
+  - {fileID: 8300000, guid: 22c687986bf60274c9ef60e894100d16, type: 3}
+  - {fileID: 8300000, guid: 679cb75341bc7bb47b0434ce795c4f82, type: 3}
+  - {fileID: 8300000, guid: a9a388f67254e1e46971ac566790f147, type: 3}
+  - {fileID: 8300000, guid: 3a4c39e3856150f4bbc654bba2131e49, type: 3}
+  - {fileID: 8300000, guid: df43a6fdbfb5f99479dfd27e6514821a, type: 3}
+  - {fileID: 8300000, guid: c6f0dd3410803324999f3350cdbb2595, type: 3}
+  - {fileID: 8300000, guid: 47c2f1cd02cf4524582dccb00a752fcb, type: 3}
+  - {fileID: 8300000, guid: b9396ffe7aacb7b4f990337855ab5f02, type: 3}
+  - {fileID: 8300000, guid: 0170501687a4068479ef7af3be6e00ac, type: 3}
+  - {fileID: 8300000, guid: cc8a22ee70a494d459828d6ada6704ca, type: 3}
+  - {fileID: 8300000, guid: 13d1e059e4cbbe04fbea602c21c39bbf, type: 3}
+  - {fileID: 8300000, guid: b66c21efdbe2bef46a8c153c0de90a8f, type: 3}
+  - {fileID: 8300000, guid: 5c7098977ae395b40a5a4cdc6a4e859b, type: 3}
+  - {fileID: 8300000, guid: 98d1252e657fb234483ae12d0d0c6650, type: 3}
+  runningFootsteps:
+  - {fileID: 8300000, guid: 67626de9db5b93c4d9add5b6c5867880, type: 3}
+  - {fileID: 8300000, guid: 606a5543529bddd44a7306eac830b34f, type: 3}
+  - {fileID: 8300000, guid: cbae92784de62c242bedef19c3a9d9ff, type: 3}
+  - {fileID: 8300000, guid: 4523cfd58d6d76c46b4d322f5df060e5, type: 3}
+  - {fileID: 8300000, guid: 5ef303e41bdacda45827ba8fe4f74f42, type: 3}
+  - {fileID: 8300000, guid: d09f933ad1725e94bbe63526060ab089, type: 3}
+  - {fileID: 8300000, guid: 04082aa4781c23b49a82c93c8f9dc47e, type: 3}
+  - {fileID: 8300000, guid: 54ab785e403074c4bba586126bdccfcd, type: 3}
+  - {fileID: 8300000, guid: 1f1634029edcf2f4994c50880828b9e4, type: 3}
+  - {fileID: 8300000, guid: 4ca3b283ea596074da05dc1fbcf2a140, type: 3}
+  - {fileID: 8300000, guid: 2da9d6168f0ddfe42bd1dc993e184fb3, type: 3}
+  - {fileID: 8300000, guid: 41262523f6148fd4b8b575970df712a6, type: 3}
+  - {fileID: 8300000, guid: 85807aa87eae4304db096a30dd91f4b0, type: 3}
+  - {fileID: 8300000, guid: a1dd0b9d4a261cf42986db6db9e30e21, type: 3}
+  - {fileID: 8300000, guid: 19aa0293d1ddc114ea6248a6bdfa6803, type: 3}
   m_JumpSound: {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
   m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
 --- !u!54 &5400000
