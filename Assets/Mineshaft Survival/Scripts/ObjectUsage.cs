@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class ObjectUsage : MonoBehaviour {
@@ -27,6 +28,9 @@ public class ObjectUsage : MonoBehaviour {
     public HandInventory inventory;
     public Animator punchAnim;
     public GameObject pickaxeSparks;
+    public AudioSource whooshSound;
+    public UnityEvent RockHit = new UnityEvent();
+    public AudioSource metalImpact;
 
     [Header ("Grabbing Objects")]
     public GameObject GrabIcon;
@@ -87,10 +91,12 @@ public class ObjectUsage : MonoBehaviour {
 
                 punchAnim.SetTrigger("PunchPick");
 
-
+                //play whoosh
+                whooshSound.Play();
                 if (Physics.Raycast(ray, out hit, 4f))
                 {
-
+                    metalImpact.Play();
+                    RockHit.Invoke();
                     GameObject PickSpark = Instantiate(pickaxeSparks, hit.point, Quaternion.LookRotation(hit.normal));
                     Destroy(PickSpark, 3f);
                     if(hit.transform.tag == "Mineable")
@@ -100,7 +106,6 @@ public class ObjectUsage : MonoBehaviour {
                         mine.Health -= 50f;
                         mine.MineRefresh();
                         mine.Save();
-
                     }
 
 
@@ -128,6 +133,7 @@ public class ObjectUsage : MonoBehaviour {
                 {
                     SpotlightStatus.text = "Enabled";
                     SpotlightStatus.color = Color.green;
+                    //spotlightSoundON
                 }
                 else
                 {

@@ -16,6 +16,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		[SerializeField] float m_AnimSpeedMultiplier = 1f;
 		[SerializeField] float m_GroundCheckDistance = 0.1f;
 
+		[SerializeField] AudioSource runSound;
+
 		Rigidbody m_Rigidbody;
 		Animator m_Animator;
 		bool m_IsGrounded;
@@ -55,6 +57,14 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			move = Vector3.ProjectOnPlane(move, m_GroundNormal);
 			m_TurnAmount = Mathf.Atan2(move.x, move.z);
 			m_ForwardAmount = move.z;
+
+			if (m_ForwardAmount > 0.1f)
+            {
+				if (!runSound.isPlaying)
+					runSound.Play();
+			}
+			else
+				runSound.Pause();
 
 			ApplyExtraTurnRotation();
 

@@ -12,6 +12,7 @@ public class Generator : MonoBehaviour {
     [Header("Visuals")]
     public GameObject VisualObjects;
 
+    [SerializeField] AudioSource audiosource;
    // [Header("ID")]
     string GeneratorID;
 
@@ -29,6 +30,8 @@ public class Generator : MonoBehaviour {
         {
             CurrentFuel = 2;
             Toggled = false;
+            //turn off
+            audiosource.Stop();
         }
         
         if(Toggled)
@@ -79,6 +82,10 @@ public class Generator : MonoBehaviour {
     public void Toggle()
     {
         Toggled = !Toggled;
+        if (Toggled)
+            audiosource.Play();
+        else
+            audiosource.Stop();
     }
     IEnumerator autoSave()
     {

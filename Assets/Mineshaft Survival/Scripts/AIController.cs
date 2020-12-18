@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityStandardAssets.Characters.ThirdPerson;
 
 public class AIController : MonoBehaviour {
@@ -24,6 +25,11 @@ public class AIController : MonoBehaviour {
 
     public GameObject AIObj; //Model of the AI
     public GameObject Player;//Player
+
+    [Header("Sounds")]
+    public UnityEvent Squeak = new UnityEvent();
+    public AudioSource runSound;
+
     Rigidbody rb; //Automaticly finds the rigidbody
     float distance; //distance float for distance calculations
 
@@ -44,6 +50,9 @@ public class AIController : MonoBehaviour {
         {
             AIObj.transform.eulerAngles = new Vector3(-90, -90, 0);
             Die();
+            if (this.enabled)
+                Squeak.Invoke();
+            runSound.Stop();
         }
 
         distance = Vector3.Distance(gameObject.transform.position, Player.transform.position); //calulates the distance between player and the AI
@@ -81,6 +90,8 @@ public class AIController : MonoBehaviour {
 	}
     IEnumerator Attack()
     {
+        if (this.enabled)
+            Squeak.Invoke();
         yield return new WaitForSeconds(AttackSpeed); //Number of seconds to wait between attacks
         if (Agressive && distance <= 2 && Health >1) //if player is in range of 2meters and AI has more than 1 health
         {
@@ -96,6 +107,8 @@ public class AIController : MonoBehaviour {
 
     IEnumerator Path()
     {
+        if (this.enabled)
+            Squeak.Invoke();
         pathRotator.transform.position = gameObject.transform.position; //set path's rotators position to current AI position
         pathRotator.transform.Rotate(Vector3.up * Random.Range(-220, 220)); //randomly rotate path rotator
         yield return new WaitForSeconds(5); //wait 5 seconds before repeating 

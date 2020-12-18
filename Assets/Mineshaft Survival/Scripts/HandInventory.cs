@@ -66,6 +66,7 @@ public class HandInventory : MonoBehaviour {
             Slot1.SetActive(true);
             Slot2.SetActive(false);
             Slot3.SetActive(false);
+
         }
         if (selected == 1)
         {

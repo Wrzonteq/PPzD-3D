@@ -75,13 +75,13 @@ public class LifeStats : MonoBehaviour {
             Time.timeScale = 0.000001f;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            gameObject.GetComponent<FirstPersonController>().enabled = false;
+            gameObject.GetComponent<FirstPersonControllerCave>().enabled = false;
         }
         else
         {
             DeathScreen.SetActive(false);
             Time.timeScale = 1;
-            gameObject.GetComponent<FirstPersonController>().enabled = true;
+            gameObject.GetComponent<FirstPersonControllerCave>().enabled = true;
         }
         if (Health >= 1000)
         {

@@ -21,7 +21,7 @@ public class Lantern : MonoBehaviour {
     string LampID; //ID that has to be set for every gameobject of this type (has to be done manually)
     string LampToggleID;
 
-
+    [SerializeField] AudioSource audiosource;
    
 
     public void LoadSettings()
@@ -152,5 +152,7 @@ public class Lantern : MonoBehaviour {
             TurnOff();
         }
         SaveSettings(); //Save lamps settings
+
+        audiosource.Play();
     }
 }

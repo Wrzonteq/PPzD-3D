@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Spotlight : MonoBehaviour {
 
+    [Header("Sounds")]
+    public AudioSource switchSoundSource;
+    public AudioSource loopSoundSource;
+
     [Header("Spotlight stats")]
     public float MaxDistance = 20;
     public bool Toggled = true;
@@ -19,6 +23,9 @@ public class Spotlight : MonoBehaviour {
     public float distance;
 
     public GameObject generator;
+
+    private bool isOn = false;
+
     public void Toggle()
     {
         Toggled = !Toggled;
@@ -38,6 +45,12 @@ public class Spotlight : MonoBehaviour {
 
         if (distance <= MaxDistance && Toggled == true && generator.GetComponent<Generator>().Toggled == true)
         {
+            if (!isOn)
+            {
+                switchSoundSource.Play();
+                loopSoundSource.Play();
+                isOn = true;
+            }
             lightCube.material = LampOn;
             Lights.SetActive(true);
         }
@@ -49,6 +62,12 @@ public class Spotlight : MonoBehaviour {
         {
             lightCube.material = LampOff;
             Lights.SetActive(false);
+            if (isOn)
+            {
+                loopSoundSource.Stop();
+                switchSoundSource.Play();
+                isOn = false;
+            }
         }
     }
 

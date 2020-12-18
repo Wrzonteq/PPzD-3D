@@ -8,8 +8,9 @@ public class AudioManager : MonoBehaviour
 {
     [SerializeField] AudioMixer mixer;
 
-    [SerializeField] UnityEvent SwitchToInsideAmbient;
-    [SerializeField] UnityEvent SwitchOutsideAmbient;
+    [SerializeField] UnityEvent TurnOnBothAmbient;
+    [SerializeField] UnityEvent TurnOffOutsideAmbient;
+    [SerializeField] UnityEvent TurnOffInsideAmbient;
 
     bool player_inside = false;
     bool inside_check = false;
@@ -21,26 +22,27 @@ public class AudioManager : MonoBehaviour
 
     public void DoorOpen(bool open)
     {
-        
         //player inside, door closed -> player inside
         if (!open && inside_check)
         {
             player_inside = true;
         }
         //player outside, door closed -> player outside
-        //player inside OR outside, door open -> count as outside (opening door = you are outside)
+        //player inside doors
         if ((!open && !inside_check) || (player_inside && open))
         {
             player_inside = false;
         }
+        //turn on both ambient
+        TurnOnBothAmbient.Invoke();
     }
 
     public void DoorClosed()
     {
         if (player_inside)
-            SwitchToInsideAmbient.Invoke();
+            TurnOffOutsideAmbient.Invoke();
         else
-            SwitchOutsideAmbient.Invoke();
+            TurnOffInsideAmbient.Invoke();
     }
 
 }
