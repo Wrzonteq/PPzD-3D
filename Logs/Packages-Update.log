@@ -52,3 +52,18 @@ Update Mode: mergeDefaultDependencies
 
 The following packages were added:
   com.unity.render-pipelines.universal@7.3.1
+
+=== Thu Dec 17 19:44:18 2020
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were added:
+  com.unity.2d.sprite@1.0.0
+  com.unity.2d.tilemap@1.0.0
+  com.unity.ads@3.4.9
+  com.unity.analytics@3.3.5
+  com.unity.purchasing@2.1.0
+  com.unity.xr.legacyinputhelpers@2.1.4
+The following packages were updated:
+  com.unity.render-pipelines.universal from version 7.3.1 to 8.2.0
