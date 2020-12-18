@@ -27,6 +27,8 @@ public class ObjectUsage : MonoBehaviour {
     public HandInventory inventory;
     public Animator punchAnim;
     public GameObject pickaxeSparks;
+    [SerializeField] AudioSource audio_swing;
+    [SerializeField] AudioSource audio_mine;
 
     [Header ("Grabbing Objects")]
     public GameObject GrabIcon;
@@ -47,9 +49,6 @@ public class ObjectUsage : MonoBehaviour {
 
     [Header ("Other objects")]
     public Camera PlayerCam;
-
-
-
 
 
 
@@ -84,7 +83,7 @@ public class ObjectUsage : MonoBehaviour {
             }
             if (inventory.selected == 2)
             {
-
+                audio_swing.Play();
                 punchAnim.SetTrigger("PunchPick");
 
 
@@ -92,6 +91,7 @@ public class ObjectUsage : MonoBehaviour {
                 {
 
                     GameObject PickSpark = Instantiate(pickaxeSparks, hit.point, Quaternion.LookRotation(hit.normal));
+                    audio_mine.Play();
                     Destroy(PickSpark, 3f);
                     if(hit.transform.tag == "Mineable")
                     {
@@ -100,7 +100,7 @@ public class ObjectUsage : MonoBehaviour {
                         mine.Health -= 50f;
                         mine.MineRefresh();
                         mine.Save();
-
+                        
                     }
 
 

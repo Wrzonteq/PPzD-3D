@@ -41,21 +41,11 @@ public class Lantern : MonoBehaviour {
         {
             toggled = true;
         }
-        if (PlayerPrefs.GetInt(LampToggleID) == 2)
-        {
-            toggled = false;
-        }
 
         if(toggled == true)
         {
             TurnOn();
         }
-        else
-        {
-            TurnOff();
-        }
-
-
     }
     public void SaveSettings() //Save lamps settings
     { 
@@ -69,10 +59,6 @@ public class Lantern : MonoBehaviour {
         if(toggled == true)
         {
               PlayerPrefs.SetInt(LampToggleID, 1);
-        }
-        if (toggled == false)
-        {
-            PlayerPrefs.SetInt(LampToggleID, 2);
         }
         PlayerPrefs.Save();
         Debug.Log("Saved Lamp settings " + LampID + " " + PlayerPrefs.GetInt(LampToggleID));
