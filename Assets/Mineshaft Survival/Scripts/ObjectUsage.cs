@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ObjectUsage : MonoBehaviour {
+public class ObjectUsage : MonoBehaviour
+{
 
+    public AudioSource InventoryUsage;
+    public AudioClip PickaxeRockSound;
+    public AudioClip Hit;
+    
     [Header ("Fuel Objects")]
     public Slider fuel;
     public OilHolder OilHolder;
@@ -47,19 +52,7 @@ public class ObjectUsage : MonoBehaviour {
 
     [Header ("Other objects")]
     public Camera PlayerCam;
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 	void Update ()
     {
         RaycastHit hit;
@@ -70,6 +63,7 @@ public class ObjectUsage : MonoBehaviour {
             if (inventory.selected == 0)
             {
                 punchAnim.SetTrigger("PunchTorch");
+                InventoryUsage.PlayOneShot(Hit);
                 if (Physics.Raycast(ray, out hit, 4f))
                 {
                     if(hit.transform.tag == "AI")
@@ -86,13 +80,17 @@ public class ObjectUsage : MonoBehaviour {
             {
 
                 punchAnim.SetTrigger("PunchPick");
+                InventoryUsage.PlayOneShot(Hit);
 
 
                 if (Physics.Raycast(ray, out hit, 4f))
                 {
 
+                    InventoryUsage.PlayOneShot(PickaxeRockSound);
+
                     GameObject PickSpark = Instantiate(pickaxeSparks, hit.point, Quaternion.LookRotation(hit.normal));
                     Destroy(PickSpark, 3f);
+
                     if(hit.transform.tag == "Mineable")
                     {
                         Mineable mine = hit.transform.GetComponent<Mineable>();
