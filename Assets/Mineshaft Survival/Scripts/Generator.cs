@@ -16,10 +16,20 @@ public class Generator : MonoBehaviour {
     string GeneratorID;
 
     string GeneratorTogg;
+
+    [Header("Audio Settings")]
+    public AudioSource generatorAudioSource;
+    public AudioClip generatorFailureClip;
+    public AudioClip generatorTurnOnClip;
+    public AudioClip generatorTurnOffClip;
+    public AudioClip generatorBuzzClip;
+    AudioSource instancerSource;
+
     public void Start()
     {
         GeneratorID = GetInstanceID().ToString() + "GENERATOR";
         GeneratorTogg = GeneratorID + "togg";
+        instancerSource = GameObject.FindWithTag("Instancer").GetComponent<AudioSource>();
         StartCoroutine(autoSave());
         LoadStats();
     }
@@ -39,6 +49,7 @@ public class Generator : MonoBehaviour {
         else
         {
             VisualObjects.SetActive(false);
+            generatorAudioSource.clip = null;
         }
     }
 
@@ -55,10 +66,13 @@ public class Generator : MonoBehaviour {
         if(PlayerPrefs.GetInt(GeneratorTogg) == 1)
         {
             Toggled = true;
+            generatorAudioSource.clip = generatorBuzzClip;
+            generatorAudioSource.Play();
         }
         if(PlayerPrefs.GetInt(GeneratorTogg) == 2)
         {
             Toggled = false;
+            generatorAudioSource.clip = null;
         }
     }
 
@@ -78,12 +92,33 @@ public class Generator : MonoBehaviour {
     }
     public void Toggle()
     {
-        Toggled = !Toggled;
+        if(CurrentFuel <= 2) 
+        {
+            instancerSource.PlayOneShot(generatorFailureClip);
+        } else
+        {
+            if (Toggled) 
+            {
+                instancerSource.PlayOneShot(generatorTurnOffClip);
+                Invoke("ToggleToggle", 0.3f);
+            } else 
+            {
+                instancerSource.PlayOneShot(generatorTurnOnClip);
+                generatorAudioSource.clip = generatorBuzzClip;
+                generatorAudioSource.PlayDelayed(1.8f);
+                ToggleToggle();
+            }
+        }
     }
     IEnumerator autoSave()
     {
         yield return new WaitForSeconds(5);
         SaveStats();
         StartCoroutine(autoSave());
+    }
+
+    private void ToggleToggle() 
+    {
+        Toggled = !Toggled;
     }
 }

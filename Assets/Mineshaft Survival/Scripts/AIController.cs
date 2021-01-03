@@ -9,6 +9,7 @@ public class AIController : MonoBehaviour {
     public float Health; //Amount of health they have
     public float Damage; //Amount of damage they deal
     public float AttackSpeed; //How fast can they attack | 1 = second
+    public int SquickInterval = 2;
     public float DetectionRange; //From how many meters can they detect players
 
     [Header("AI Extra's")]
@@ -19,6 +20,14 @@ public class AIController : MonoBehaviour {
     public AICharacterControl Target; //AICharacterControl script
     public ThirdPersonCharacter thirdChar; //ThirdPersonCharacter script
 
+    [Header("Audio Settings")]
+    public AudioSource ratAudioSource;
+    public AudioClip dyingClip;
+    public AudioClip attackClip;
+    public AudioClip harmedClip;
+    public AudioClip[] randomClip;
+    
+    [Header("Other")]
     public GameObject pathRotator; //RandomPath Gen rotation cube
     public GameObject pathLeader; //RandomPath Gen sphere
 
@@ -30,6 +39,8 @@ public class AIController : MonoBehaviour {
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        StartCoroutine(Squick());
+
         if(PathFinder == true) //if Pathfinder is enabled AI will automaticly generate his path 
         {
             StartCoroutine(Path());
@@ -43,6 +54,8 @@ public class AIController : MonoBehaviour {
         if(Health <= 0) //if healht is 0 or less it will die and change models rotation to -90
         {
             AIObj.transform.eulerAngles = new Vector3(-90, -90, 0);
+            ratAudioSource.PlayOneShot(dyingClip);
+            //Debug.Log("Rat died");
             Die();
         }
 
@@ -84,6 +97,8 @@ public class AIController : MonoBehaviour {
         yield return new WaitForSeconds(AttackSpeed); //Number of seconds to wait between attacks
         if (Agressive && distance <= 2 && Health >1) //if player is in range of 2meters and AI has more than 1 health
         {
+            ratAudioSource.PlayOneShot(attackClip);
+            //Debug.Log("Rat attacked");
             Player.transform.GetComponent<LifeStats>().Health -= Damage; //deal damage to player
             StartCoroutine(Attack()); //start new attack
         }
@@ -101,6 +116,21 @@ public class AIController : MonoBehaviour {
         yield return new WaitForSeconds(5); //wait 5 seconds before repeating 
         StartCoroutine(Path()); //start path finding again
     }
+
+    IEnumerator Squick()
+    {
+        int i = Random.Range(1, 5);
+
+        if (i == 1)
+        {
+            //Debug.Log("Rat squicked");
+            ratAudioSource.PlayOneShot(randomClip[Random.Range(0, 2)]);
+        }
+        
+        yield return new WaitForSeconds(SquickInterval);
+        StartCoroutine(Squick());
+    }
+
     public void Die()
     {
         rb.isKinematic = true; //set rigidbody to kinematic when dead

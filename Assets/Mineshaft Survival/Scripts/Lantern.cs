@@ -21,7 +21,12 @@ public class Lantern : MonoBehaviour {
     string LampID; //ID that has to be set for every gameobject of this type (has to be done manually)
     string LampToggleID;
 
-
+    [Header ("Audio Settings")]
+    public AudioClip ignitionClip;
+    public AudioClip extinguishmentClip;
+    AudioSource audioSource;
+    AudioSource instancerSource;
+    
    
 
     public void LoadSettings()
@@ -103,6 +108,8 @@ public class Lantern : MonoBehaviour {
         Player = GameObject.FindGameObjectWithTag("Player");
         LampID = GetInstanceID().ToString() + "LAMP";
         LampToggleID = LampID + "togg";
+        audioSource = GetComponent<AudioSource>();
+        instancerSource = GameObject.FindWithTag("Instancer").GetComponent<AudioSource>();
         LoadSettings();
         StartCoroutine(AutoSave());
     }
@@ -128,16 +135,19 @@ public class Lantern : MonoBehaviour {
         }
         
 	}
+
     public void TurnOn()
     {
         toggled = true;
         Glass.material = LampOn; //if lamp gets turned on change its glass material to LampOn
+        audioSource.enabled = true;
         Light.SetActive(true);
     }
     public void TurnOff()
     {
         toggled = false;
         Glass.material = LampOff;//if lamp gets turned off change its glass material to LampOff
+        audioSource.enabled = false;
         Light.SetActive(false);
     }
     public void Toggle()
@@ -145,10 +155,12 @@ public class Lantern : MonoBehaviour {
         toggled = !toggled; //toggle lamp
         if(toggled == true)
         {
-            TurnOn();
+            instancerSource.PlayOneShot(ignitionClip);
+            Invoke("TurnOn", 0.280f);
         }
         if (toggled == false)
         {
+            instancerSource.PlayOneShot(extinguishmentClip);
             TurnOff();
         }
         SaveSettings(); //Save lamps settings
