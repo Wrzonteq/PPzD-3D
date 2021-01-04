@@ -48,6 +48,12 @@ public class ObjectUsage : MonoBehaviour {
     [Header ("Other objects")]
     public Camera PlayerCam;
 
+    [Header ("Sound Settings")]
+    public AudioClip refuelingClip;
+    public AudioClip takingFuelClip;
+    public AudioClip pickaxeHitClip;
+    public AudioClip pickaxeSwingClip;
+    AudioSource instancerSource;
 
 
 
@@ -59,6 +65,10 @@ public class ObjectUsage : MonoBehaviour {
 
 
 
+    void Start() 
+    {
+        instancerSource = GameObject.FindWithTag("Instancer").GetComponent<AudioSource>();
+    }
 
 	void Update ()
     {
@@ -75,6 +85,9 @@ public class ObjectUsage : MonoBehaviour {
                     if(hit.transform.tag == "AI")
                     {
                         AIController AI = hit.transform.GetComponent<AIController>();
+
+                        AI.ratAudioSource.PlayOneShot(AI.harmedClip);
+                        //Debug.Log("Rat harmed");
                         AI.Health -= 20f;
                         AI.Agressive = true;
                         AI.PathFinder = false;
@@ -84,7 +97,7 @@ public class ObjectUsage : MonoBehaviour {
             }
             if (inventory.selected == 2)
             {
-
+                instancerSource.PlayOneShot(pickaxeSwingClip);
                 punchAnim.SetTrigger("PunchPick");
 
 
@@ -93,10 +106,16 @@ public class ObjectUsage : MonoBehaviour {
 
                     GameObject PickSpark = Instantiate(pickaxeSparks, hit.point, Quaternion.LookRotation(hit.normal));
                     Destroy(PickSpark, 3f);
+
+                    if (hit.transform.tag != "AI")
+                    {
+                        instancerSource.PlayOneShot(pickaxeHitClip);
+                    }
+
                     if(hit.transform.tag == "Mineable")
                     {
                         Mineable mine = hit.transform.GetComponent<Mineable>();
-
+            
                         mine.Health -= 50f;
                         mine.MineRefresh();
                         mine.Save();
@@ -108,6 +127,8 @@ public class ObjectUsage : MonoBehaviour {
                     if (hit.transform.tag == "AI")
                     {
                         AIController AI = hit.transform.GetComponent<AIController>();
+                        AI.ratAudioSource.PlayOneShot(AI.harmedClip);
+                        //Debug.Log("Rat harmed");
                         AI.Health -= 50f;
                         AI.Agressive = true;
                         AI.PathFinder = false;
@@ -197,6 +218,7 @@ public class ObjectUsage : MonoBehaviour {
                     {
                         OilHolder.HoldingNow--;
                         hit.transform.GetComponent<Generator>().CurrentFuel += 1000;
+                        instancerSource.PlayOneShot(refuelingClip);
                         hit.transform.GetComponent<Generator>().SaveStats();
                         OilHolder.Save();
                     }
@@ -250,6 +272,7 @@ public class ObjectUsage : MonoBehaviour {
                     {
                             OilHolder.HoldingNow += 2;
                             hit.transform.GetComponent<OilBarrel>().fuel -= 2;
+                            instancerSource.PlayOneShot(takingFuelClip);
                             OilHolder.Save();
                             hit.transform.GetComponent<OilBarrel>().Save();
 
@@ -262,6 +285,7 @@ public class ObjectUsage : MonoBehaviour {
                             {
                                 OilHolder.HoldingNow += 1;
                                 hit.transform.GetComponent<OilBarrel>().fuel -= 1;
+                                instancerSource.PlayOneShot(takingFuelClip);
                                 OilHolder.Save();
                                 hit.transform.GetComponent<OilBarrel>().Save();
                             }
@@ -386,6 +410,7 @@ public class ObjectUsage : MonoBehaviour {
                         {
                             OilHolder.HoldingNow--;
                             objHit.GetComponent<Lantern>().Fuel += 900f;
+                            instancerSource.PlayOneShot(refuelingClip);
                             OilHolder.Save();
                             objHit.GetComponent<Lantern>().SaveSettings();
                         }
@@ -422,7 +447,7 @@ public class ObjectUsage : MonoBehaviour {
                     {
                         objHit.GetComponent<Lantern>().Toggle();
                         objHit.GetComponent<Lantern>().SaveSettings();
-                    }
+                    } 
 
                 }
 
