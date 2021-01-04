@@ -19,8 +19,34 @@ public class Spotlight : MonoBehaviour {
     public float distance;
 
     public GameObject generator;
+
+    [Header("Audio Settings")]
+    public AudioClip spotlightFailureClip;
+    public AudioClip spotlightTurnOnClip;
+    public AudioClip spotlightTurnOffClip;
+    public AudioClip spotlightBuzzClip;
+    AudioSource audioSource;
+    AudioSource instancerSource;
+
     public void Toggle()
     {
+        if(generator.GetComponent<Generator>().Toggled == false) 
+        {
+            audioSource.PlayOneShot(spotlightFailureClip);
+        } else 
+        {
+            if(Toggled) 
+            {
+                instancerSource.PlayOneShot(spotlightTurnOffClip);
+                audioSource.clip = null;
+            } else 
+            {
+                instancerSource.PlayOneShot(spotlightTurnOnClip);
+                audioSource.clip = spotlightBuzzClip;
+                audioSource.Play();
+            }
+        }
+            
         Toggled = !Toggled;
     }
 
@@ -28,6 +54,8 @@ public class Spotlight : MonoBehaviour {
     public void Start()
     {
         SpotID = GetInstanceID().ToString() + "SPOTLIGHT";
+        audioSource = GetComponent<AudioSource>();
+        instancerSource = GameObject.FindWithTag("Instancer").GetComponent<AudioSource>();
         Load();
     }
 
@@ -49,6 +77,7 @@ public class Spotlight : MonoBehaviour {
         {
             lightCube.material = LampOff;
             Lights.SetActive(false);
+            audioSource.clip = null;
         }
     }
 
@@ -68,10 +97,13 @@ public class Spotlight : MonoBehaviour {
         if(PlayerPrefs.GetInt(SpotID) == 1)
         {
             Toggled = true;
+            audioSource.clip = spotlightBuzzClip;
+            audioSource.Play();
         }
         else
-        {
+        {          
             Toggled = false;
+            audioSource.clip = null;
         }
     }
 }
