@@ -48,19 +48,12 @@ public class ObjectUsage : MonoBehaviour {
     [Header ("Other objects")]
     public Camera PlayerCam;
 
+    [SerializeField] private AudioSource pickAxe;
+    [SerializeField] private AudioClip pickAxeSwing;
+    [SerializeField] private AudioClip pickAxeHit;
+    
 
-
-
-
-
-
-
-
-
-
-
-
-	void Update ()
+    void Update ()
     {
         RaycastHit hit;
         Ray ray = PlayerCam.ScreenPointToRay(Input.mousePosition);
@@ -87,9 +80,11 @@ public class ObjectUsage : MonoBehaviour {
 
                 punchAnim.SetTrigger("PunchPick");
 
-
+                pickAxe.PlayOneShot(pickAxeSwing);
+                
                 if (Physics.Raycast(ray, out hit, 4f))
                 {
+                    pickAxe.PlayOneShot(pickAxeHit);
 
                     GameObject PickSpark = Instantiate(pickaxeSparks, hit.point, Quaternion.LookRotation(hit.normal));
                     Destroy(PickSpark, 3f);
