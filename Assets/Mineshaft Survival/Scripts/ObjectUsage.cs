@@ -27,6 +27,9 @@ public class ObjectUsage : MonoBehaviour {
     public HandInventory inventory;
     public Animator punchAnim;
     public GameObject pickaxeSparks;
+    public AudioSource playerSource;
+    public AudioClip pickaxePrep;
+    public AudioClip pickaxeHit;
 
     [Header ("Grabbing Objects")]
     public GameObject GrabIcon;
@@ -53,14 +56,21 @@ public class ObjectUsage : MonoBehaviour {
 
 
 
+    private void Start()
+    {
+        var playerSource = GetComponent<AudioSource>();
+    }
 
 
 
+    IEnumerator PlayHitSound()
+    {
+        yield return new WaitForSeconds(0.5f);
+        playerSource.PlayOneShot(pickaxeHit);
+    }
 
 
-
-
-	void Update ()
+    void Update ()
     {
         RaycastHit hit;
         Ray ray = PlayerCam.ScreenPointToRay(Input.mousePosition);
@@ -86,11 +96,11 @@ public class ObjectUsage : MonoBehaviour {
             {
 
                 punchAnim.SetTrigger("PunchPick");
-
+                playerSource.PlayOneShot(pickaxePrep);
 
                 if (Physics.Raycast(ray, out hit, 4f))
                 {
-
+                    StartCoroutine(PlayHitSound());
                     GameObject PickSpark = Instantiate(pickaxeSparks, hit.point, Quaternion.LookRotation(hit.normal));
                     Destroy(PickSpark, 3f);
                     if(hit.transform.tag == "Mineable")
@@ -434,4 +444,6 @@ public class ObjectUsage : MonoBehaviour {
         }
 
 	}
+
+    
 }
