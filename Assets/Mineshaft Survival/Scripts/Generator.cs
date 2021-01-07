@@ -12,6 +12,11 @@ public class Generator : MonoBehaviour {
     [Header("Visuals")]
     public GameObject VisualObjects;
 
+    [Header("Sound")]
+    public AudioSource GeneratorSource;
+    public AudioClip GeneratorNoise;
+    private bool isPlaying = false;
+
    // [Header("ID")]
     string GeneratorID;
 
@@ -27,17 +32,25 @@ public class Generator : MonoBehaviour {
     {
         if(CurrentFuel <= 2)
         {
+           
             CurrentFuel = 2;
             Toggled = false;
         }
         
         if(Toggled)
         {
+            if (!isPlaying)
+            {
+                GeneratorSource.Play();
+                isPlaying = true;
+            }
             VisualObjects.SetActive(true);
             CurrentFuel -= 0.03f;
         }
         else
         {
+            GeneratorSource.Stop();
+            isPlaying = false;
             VisualObjects.SetActive(false);
         }
     }
