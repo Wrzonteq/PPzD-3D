@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{37101a3e-7f61-4d87-99ec-1bb86248252b}">
+		<property name="assetPath">
+			<value>PM_FSSF2_AIR_HISS_RELEASE_DISTANT_1.ogg</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>4.8190929705215417</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{c28c3ea5-4068-41d7-8559-52045a72cd9a}</destination>
+		</relationship>
+	</object>
+</objects>

@@ -1,3 +1,4 @@
+using FMODUnity;
 using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
@@ -170,15 +171,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 return;
             }
-            // pick & play a random footstep sound from the array,
-            // excluding sound at index 0
-            var foostepsClips = m_IsWalking ? m_FootstepSounds : runningFootsteps;
-            int n = Random.Range(1, foostepsClips.Length);
-            m_AudioSource.clip = foostepsClips[n];
-            m_AudioSource.PlayOneShot(m_AudioSource.clip);
-            // move picked sound to index 0 so it's not picked next time
-            foostepsClips[n] = foostepsClips[0];
-            foostepsClips[0] = m_AudioSource.clip;
+            RuntimeManager.PlayOneShot("event:/footsteps");
         }
 
 

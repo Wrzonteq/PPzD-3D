@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using FMODUnity;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class Door : MonoBehaviour {
@@ -10,6 +11,7 @@ public class Door : MonoBehaviour {
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Player")) {
             animator.SetBool("character_nearby", true);
+            RuntimeManager.PlayOneShot("event:/open");
             onDoorOpen.Invoke();
         }
     }
@@ -17,6 +19,7 @@ public class Door : MonoBehaviour {
     void OnTriggerExit(Collider other) {
         if (other.gameObject.CompareTag("Player")) {
             animator.SetBool("character_nearby", false);
+            RuntimeManager.PlayOneShot("event:/close");
             onDoorClose.Invoke();
         }
     }

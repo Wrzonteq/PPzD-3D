@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{db715631-9464-4c8a-bfa3-1400f04f6de8}">
+		<property name="assetPath">
+			<value>PM_FSSF2_WEAPONS_J2_SHOT.ogg</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>3.4638548752834466</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{c28c3ea5-4068-41d7-8559-52045a72cd9a}</destination>
+		</relationship>
+	</object>
+</objects>

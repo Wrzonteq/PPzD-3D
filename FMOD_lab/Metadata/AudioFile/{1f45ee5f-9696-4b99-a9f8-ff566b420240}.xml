@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{1f45ee5f-9696-4b99-a9f8-ff566b420240}">
+		<property name="assetPath">
+			<value>PM_FSSF2_MICROTECH_26.ogg</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.2832426303854876</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{c28c3ea5-4068-41d7-8559-52045a72cd9a}</destination>
+		</relationship>
+	</object>
+</objects>
