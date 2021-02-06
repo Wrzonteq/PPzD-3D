@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{ce1cfc59-d316-43de-9fd5-2e282b55e43a}">
+		<property name="assetPath">
+			<value>Sci-Fi/PM_FSSF2_TONAL_ACHIEVEMENT_POWERUP_EVENT_19.ogg</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>2.0058276643990931</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{cee31d77-154d-4116-ad0a-2bc2996d9b56}</destination>
+		</relationship>
+	</object>
+</objects>
