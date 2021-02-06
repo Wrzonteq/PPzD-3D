@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="Bank" id="{d15b9b9c-5d32-4bba-b211-70b6a986e64c}">
+		<property name="name">
+			<value>Environment - Outpost on Desert</value>
+		</property>
+		<relationship name="folder">
+			<destination>{3d8baf39-4c70-44b2-a456-4fd79c523f21}</destination>
+		</relationship>
+	</object>
+</objects>

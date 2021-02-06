@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
 using Random = UnityEngine.Random;
+using FMOD;
+using FMODUnity;
 
 namespace UnityStandardAssets.Characters.FirstPerson
 {
@@ -172,13 +174,18 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             // pick & play a random footstep sound from the array,
             // excluding sound at index 0
-            var foostepsClips = m_IsWalking ? m_FootstepSounds : runningFootsteps;
+            //var foostepsClips = m_IsWalking ? m_FootstepSounds : runningFootsteps;
+            var footstepsClips = m_IsWalking ? "event:/Footstep_Walk" : "event:/Footstep_Run";
+
+            RuntimeManager.PlayOneShot(footstepsClips);
+            /*
             int n = Random.Range(1, foostepsClips.Length);
             m_AudioSource.clip = foostepsClips[n];
             m_AudioSource.PlayOneShot(m_AudioSource.clip);
             // move picked sound to index 0 so it's not picked next time
             foostepsClips[n] = foostepsClips[0];
             foostepsClips[0] = m_AudioSource.clip;
+            */
         }
 
 
