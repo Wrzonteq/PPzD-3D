@@ -21,7 +21,7 @@ public class Lantern : MonoBehaviour {
     string LampID; //ID that has to be set for every gameobject of this type (has to be done manually)
     string LampToggleID;
 
-
+    public AudioSource source;
    
 
     public void LoadSettings()
@@ -100,6 +100,15 @@ public class Lantern : MonoBehaviour {
 
     void Start()
     {
+        if (toggled)
+        {
+            source.Play();
+        }
+        else
+        {
+            source.Stop();
+        }
+
         Player = GameObject.FindGameObjectWithTag("Player");
         LampID = GetInstanceID().ToString() + "LAMP";
         LampToggleID = LampID + "togg";
@@ -130,12 +139,14 @@ public class Lantern : MonoBehaviour {
 	}
     public void TurnOn()
     {
+        source.Play();
         toggled = true;
         Glass.material = LampOn; //if lamp gets turned on change its glass material to LampOn
         Light.SetActive(true);
     }
     public void TurnOff()
     {
+        source.Stop();
         toggled = false;
         Glass.material = LampOff;//if lamp gets turned off change its glass material to LampOff
         Light.SetActive(false);

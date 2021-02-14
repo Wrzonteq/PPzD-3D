@@ -90,7 +90,7 @@ public class ObjectUsage : MonoBehaviour {
 
                 if (Physics.Raycast(ray, out hit, 4f))
                 {
-
+                    inventory.Slot3.GetComponent<AudioSource>().Play();
                     GameObject PickSpark = Instantiate(pickaxeSparks, hit.point, Quaternion.LookRotation(hit.normal));
                     Destroy(PickSpark, 3f);
                     if(hit.transform.tag == "Mineable")
