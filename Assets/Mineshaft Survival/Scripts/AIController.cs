@@ -27,6 +27,8 @@ public class AIController : MonoBehaviour {
     Rigidbody rb; //Automaticly finds the rigidbody
     float distance; //distance float for distance calculations
 
+    public AudioSource source;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -103,6 +105,8 @@ public class AIController : MonoBehaviour {
     }
     public void Die()
     {
+        source.Stop();
+
         rb.isKinematic = true; //set rigidbody to kinematic when dead
         thirdChar.enabled = false; //disable all scripts after death
         Target.enabled = false; // ^
