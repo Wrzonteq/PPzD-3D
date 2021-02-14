@@ -477,6 +477,7 @@ GameObject:
   - component: {fileID: 6473736}
   - component: {fileID: 4386712165764664054}
   - component: {fileID: 2320976660866690573}
+  - component: {fileID: 7272142767682980071}
   m_Layer: 0
   m_Name: door_3
   m_TagString: Untagged
@@ -595,6 +596,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 9573410}
+  onDoorOpen:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7272142767682980071}
+        m_TargetAssemblyTypeName: FMODUnity.StudioEventEmitter, FMODUnity
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDoorClose:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7272142767682980071}
+        m_TargetAssemblyTypeName: FMODUnity.StudioEventEmitter, FMODUnity
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!65 &2320976660866690573
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -608,3 +639,26 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.9999993, y: 4.0475597, z: 4.0093784}
   m_Center: {x: -0.0000001192093, y: 2.0237799, z: 0.03349614}
+--- !u!114 &7272142767682980071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  Event: event:/drzwi
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
