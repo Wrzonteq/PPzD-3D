@@ -27,6 +27,7 @@ public class ObjectUsage : MonoBehaviour {
     public HandInventory inventory;
     public Animator punchAnim;
     public GameObject pickaxeSparks;
+    public AudioSource pickaxeHit;
 
     [Header ("Grabbing Objects")]
     public GameObject GrabIcon;
@@ -92,6 +93,8 @@ public class ObjectUsage : MonoBehaviour {
                 {
 
                     GameObject PickSpark = Instantiate(pickaxeSparks, hit.point, Quaternion.LookRotation(hit.normal));
+                    pickaxeHit.Play();
+                    
                     Destroy(PickSpark, 3f);
                     if(hit.transform.tag == "Mineable")
                     {
@@ -102,8 +105,6 @@ public class ObjectUsage : MonoBehaviour {
                         mine.Save();
 
                     }
-
-
 
                     if (hit.transform.tag == "AI")
                     {
